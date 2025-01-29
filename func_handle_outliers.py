@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-def handle_outliers(df, numerical_columns):
+def handle_outliers(df, file_with_numerical_or_categorical_columns):
     """
     Обробляє викиди у вказаних числових колонках.
     
@@ -11,32 +11,31 @@ def handle_outliers(df, numerical_columns):
     
     Args:
         df (DataFrame): Набір даних для обробки.
-        numerical_columns (list): Список числових колонок.
+        file_with_numerical_or_categorical_columns (list): Список числових колонок.
     
     Returns:
         DataFrame: Набір даних після обробки викидів.
     """
-    for col in numerical_columns:
-        print(f"Обробляємо колонку: {col}")
+    outliers_count = {}
+
+    for col in file_with_numerical_or_categorical_columns:
+        print(f"Processing the column: {col}")
         
         # Обчислюємо межі міжквартильного діапазону (IQR)
         Q1 = df[col].quantile(0.25)  # Перший квартиль (25-й перцентиль)
         Q3 = df[col].quantile(0.75)  # Третій квартиль (75-й перцентиль)
         IQR = Q3 - Q1
         
-        # Визначаємо нижню та верхню межі
         lower_bound = Q1 - 1.5 * IQR
         upper_bound = Q3 + 1.5 * IQR
-        print(f"Межі для {col}: [{lower_bound}, {upper_bound}]")
-        
-        # Кількість викидів
-        outliers_below = (df[col] < lower_bound).sum()
-        outliers_above = (df[col] > upper_bound).sum()
-        print(f"Викиди нижче межі: {outliers_below}, вище межі: {outliers_above}")
-        
-        # Вибір дії для обробки викидів
-        # 1. Видалення викидів
-        df = df[(df[col] >= lower_bound) & (df[col] <= upper_bound)]
-        print(f"Колонка {col} оброблена, залишилося {len(df)} записів.")
+
+        outlines = (df[col] < lower_bound) | (df[col] > upper_bound)
+        num_outlines = outlines.sum()
+        outliers_count[col] = num_outlines
+
+        print(f'Identified {num_outlines} outlines in column {col}')
+        df = df[~outlines]
+
+    print(f'Total number of emissions by columns: {outliers_count}')
         
     return df
