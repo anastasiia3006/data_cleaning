@@ -1,4 +1,7 @@
+from unittest.mock import inplace
+
 import pandas as pd
+from stats import median
 
 
 def check_DB(df, file_name='data_statistics.txt'):
@@ -32,8 +35,24 @@ def check_DB(df, file_name='data_statistics.txt'):
     print(f"Statistics are saved to the file '{file_name}'")
 
 
-
-
     # can also give a tipp, which columns need to convert to correct data
     # and which data is incorrect and need to fill a new data 
 
+def missing_values_filling(df, categorical_or_numerical_val):
+    # if categorical = Unknown, if numerical = median()
+
+    for col in categorical_or_numerical_val:
+        if col in df.columns:
+            if df[col].isnull().sum() > 0:
+                if df[col].dtype == 'object':
+                   df[col].fillna('Unknown', inplace = True)
+                else:
+                    median_val = df[col].median()
+                    df[col].fillna(median_val, inplace=True)
+            else:
+                None
+        else:
+            None
+    print(df.isnull().sum())
+
+    return df
