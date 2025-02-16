@@ -39,7 +39,6 @@ def check_DB(df, file_name='data_statistics.txt'):
     # and which data is incorrect and need to fill a new data 
 
 def missing_values_filling(df, categorical_or_numerical_val):
-    # if categorical = Unknown, if numerical = median()
 
     for col in categorical_or_numerical_val:
         if col in df.columns:
