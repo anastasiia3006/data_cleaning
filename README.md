@@ -1,6 +1,5 @@
-# data_cleaning
+# Data Preprocessing Pipeline
 
-Data Preprocessing Pipeline
 
 This repository provides a simple pipeline for data preprocessing. The project includes:
     Database Checking: Generates a detailed report that includes a preview of the data, data types, missing values, statistical summary, duplicate count, and lists of categorical and numerical columns.
