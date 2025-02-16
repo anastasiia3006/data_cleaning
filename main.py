@@ -4,7 +4,7 @@ from func_for_check_DB import check_DB, missing_values_filling
 from func_handle_outliers import handle_outliers
 
 
-# fetch dataset 
+# fetch dataset from ml repository
 adult = fetch_ucirepo(id=2) 
   
 # data (as pandas dataframes) 
