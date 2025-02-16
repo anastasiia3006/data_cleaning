@@ -4,26 +4,26 @@ import pandas as pd
 
 def handle_outliers(df, file_with_numerical_or_categorical_columns):
     """
-    Обробляє викиди у вказаних числових колонках.
+ Processes emissions in the specified numerical columns.
     
-    1. Виявляє викиди за допомогою меж міжквартильного діапазону (IQR).
-    2. Видаляє або обмежує викиди до меж діапазону.
+    1. Detects emissions by means of an inter -fertile range (IQR).
+    2. Removes or limits emissions to range limits.
     
     Args:
-        df (DataFrame): Набір даних для обробки.
-        file_with_numerical_or_categorical_columns (list): Список числових колонок.
+        df (DataFrame):  Set of data for processing.
+        file_with_numerical_or_categorical_columns (list): List of numerical columns.
     
     Returns:
-        DataFrame: Набір даних після обробки викидів.
+        DataFrame: Data set after emission processing.
     """
     outliers_count = {}
 
     for col in file_with_numerical_or_categorical_columns:
         print(f"Processing the column: {col}")
         
-        # Обчислюємо межі міжквартильного діапазону (IQR)
-        Q1 = df[col].quantile(0.25)  # Перший квартиль (25-й перцентиль)
-        Q3 = df[col].quantile(0.75)  # Третій квартиль (75-й перцентиль)
+        # Calculate the boundaries of the inter -fertile range (IQR)
+        Q1 = df[col].quantile(0.25)  # The first plural (25th percentile)
+        Q3 = df[col].quantile(0.75)  # Third Apile (75th Purrently)
         IQR = Q3 - Q1
         
         lower_bound = Q1 - 1.5 * IQR
